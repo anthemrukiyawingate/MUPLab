@@ -1,7 +1,7 @@
 # Moringa Ultrasonic Pop Classification Research Overview
 ---
 
-[![Watch the video]([https://img.youtube.com/vi/dQw4w9WgXcQ](https://youtu.be/mUnXAo9ppl8)/maxresdefault.jpg)](https://youtu.be/mUnXAo9ppl8)
+[![Watch the video](https://img.youtube.com/vi/mUnXAo9ppl8/maxresdefault.jpg)](https://youtu.be/mUnXAo9ppl8)
 
 ---
 
