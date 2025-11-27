@@ -1,7 +1,7 @@
 # Moringa Ultrasonic Pop Classification Research Overview
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/title-slide.png" alt="MUP1">
+[![Watch the video]([https://img.youtube.com/vi/dQw4w9WgXcQ](https://youtu.be/mUnXAo9ppl8)/maxresdefault.jpg)](https://youtu.be/mUnXAo9ppl8)
 
 ---
 
