@@ -124,7 +124,7 @@ Project scope: 3 identical stations built around the VIVOSUN VGrow Smart Box, ea
 
 | Lab Station Interior                                                                   | Lab Station Exterior                                                                    |
 | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------  |
-| <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/lab-station-exterior.png" alt="MUP12"> |  <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/lab-station-interior.png" alt="MUP13"> | 
+| <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/lab-station-exterior.jpg" alt="MUP12"> |  <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/lab-station-interior.jpg" alt="MUP13"> | 
 
 
 ---
