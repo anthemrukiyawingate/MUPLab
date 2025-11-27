@@ -67,15 +67,19 @@ save_model(clf, "model.joblib")
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/data-sample.png" alt="MUP8">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/jenkins.png" alt="MUP8">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/discussion.png" alt="MUP9">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/data-sample.png" alt="MUP9">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/conclusion.png" alt="MUP10">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/discussion.png" alt="MUP10">
+
+---
+
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/conclusion.png" alt="MUP11">
 
 ---
 
@@ -117,10 +121,11 @@ Project scope: 3 identical stations built around the VIVOSUN VGrow Smart Box, ea
 | Short shielded USB cable, USB-A to USB-B or USB-C (per Ultramic model) |   1 | Keep length short to reduce EMI in ultrasonic band.                                                                                               | Vendor docs                            |
 | Microbe Life Hydroponics Photosynthesis Plus, 32 oz                    |   1 | Nutrient/biological additive for hydroponics. Follow product dosing and safety.                                                                   | ([52Pi Store][5])                      |
 
-Notes:
 
-* If the Ultramic model you have uses USB-A, use a high-quality shielded USB-A to the Pi’s USB 3.0 port. If it is a USB-C variant, match accordingly. Core usage guidance is in the Dodotronic user guide. ([thegrowguys.com.au][1])
-* The VGrow bundle page confirms the DWC kit integration and built-in sensors useful for contextual metadata. 
+| Lab Station Interior                                                                   | Lab Station Exterior                                                                    |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------  |
+| <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/lab-station-exterior.png" alt="MUP12"> |  <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/lab-station-interior.png" alt="MUP13"> | 
+
 
 ---
 
