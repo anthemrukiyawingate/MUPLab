@@ -1,19 +1,19 @@
 # FarmLab: Moringa Ultrasonic Pop Classification System
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/title-slide.png" alt="MUP1">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/title-slide.png" alt="MUP1">
 
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/roadmap.png" alt="MUP2">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/roadmap.png" alt="MUP2">
 
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/research-question-and-hypothesis.png" alt="MUP3">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/research-question-and-hypothesis.png" alt="MUP3">
 
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/experimental-variables-and-design-summary.png" alt="MUP4">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/experimental-variables-and-design-summary.png" alt="MUP4">
 
 ---
 
@@ -26,7 +26,7 @@ Capture (384 kHz WAV)
 -> Metrics: PR/ROC, confusion matrix, demo predictions
 ```
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/code-review.png" alt="MUP5"> 
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/code-review.png" alt="MUP5"> 
 
 
 ```python
@@ -59,23 +59,23 @@ save_model(clf, "model.joblib")
 
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/ultrasonic-pipeline-overview.png" alt="MUP6">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/ultrasonic-pipeline-overview.png" alt="MUP6">
 
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/data-handling.png" alt="MUP7">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/data-handling.png" alt="MUP7">
 
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/data-sample.png" alt="MUP8">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/data-sample.png" alt="MUP8">
 
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/discussion.png" alt="MUP9">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/discussion.png" alt="MUP9">
 
 ---
 
-<img src="https://github.com/Automated-Aeroponics-Innovations/FarmLab-Product-Development/blob/RES-moringa/conclusion.png" alt="MUP10">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/conclusion.png" alt="MUP10">
 
 ---
 
