@@ -7,19 +7,19 @@
   </a>
 </div>
 
-> Please click on the image above to view the presentation on Youtube.
+# *Please click on the image above to view the presentation on Youtube.*
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/roadmap.png" alt="MUP2">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/roadmap.png" alt="MUP2">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/research-question-and-hypothesis.png" alt="MUP3">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/research-question-and-hypothesis.png" alt="MUP3">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/experimental-variables-and-design-summary.png" alt="MUP4">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/experimental-variables-and-design-summary.png" alt="MUP4">
 
 ---
 
@@ -32,7 +32,7 @@ Capture (384 kHz WAV)
 -> Metrics: PR/ROC, confusion matrix, demo predictions
 ```
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/code-review.png" alt="MUP5"> 
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/code-review.png" alt="MUP5"> 
 
 
 ```python
@@ -65,27 +65,27 @@ save_model(clf, "model.joblib")
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/ultrasonic-pipeline-overview.png" alt="MUP6">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/ultrasonic-pipeline-overview.png" alt="MUP6">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/data-handling.png" alt="MUP7">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/data-handling.png" alt="MUP7">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/jenkins.png" alt="MUP8">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/jenkins.png" alt="MUP8">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/data-sample.png" alt="MUP9">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/data-sample.png" alt="MUP9">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/discussion.png" alt="MUP10">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/discussion.png" alt="MUP10">
 
 ---
 
-<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/conclusion.png" alt="MUP11">
+<img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/conclusion.png" alt="MUP11">
 
 ---
 
@@ -130,7 +130,7 @@ Project scope: 3 identical stations built around the VIVOSUN VGrow Smart Box, ea
 
 | Lab Station Interior                                                                   | Lab Station Exterior                                                                    |
 | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------  |
-| <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/lab-station-exterior.jpg" alt="MUP12"> |  <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/lab-station-interior.jpg" alt="MUP13"> | 
+| <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/lab-station-exterior.jpg" alt="MUP12"> |  <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/images/lab-station-interior.jpg" alt="MUP13"> | 
 
 
 ---
