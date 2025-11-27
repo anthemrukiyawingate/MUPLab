@@ -7,6 +7,8 @@
   </a>
 </div>
 
+> Please click on the image above to view the presentation on Youtube.
+
 ---
 
 <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/roadmap.png" alt="MUP2">
