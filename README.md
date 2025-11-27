@@ -7,7 +7,7 @@
   </a>
 </div>
 
-# *Please click on the image above to view the presentation on Youtube.*
+> *Please click on the image above to view the presentation on Youtube.*
 
 ---
 
