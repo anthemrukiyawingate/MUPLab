@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUP Lab | Moringa Ultrasonic Pop Research</title>
+    <meta name="description" content="Investigating ultrasonic emissions in Moringa oleifera for precision agriculture applications. North Carolina A&T State University.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #0a0f0d;
+            --color-bg-alt: #111916;
+            --color-surface: #1a2420;
+            --color-surface-hover: #243028;
+            --color-primary: #7dd3a8;
+            --color-primary-dim: #4a9b72;
+            --color-accent: #f0c674;
+            --color-accent-dim: #c9a455;
+            --color-text: #e8ede9;
+            --color-text-muted: #8fa396;
+            --color-border: #2d3d34;
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-size: 17px;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.4;
+            background-image: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(125, 211, 168, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(240, 198, 116, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 80% at 70% 80%, rgba(125, 211, 168, 0.06) 0%, transparent 50%);
+        }
+
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 2rem;
+            background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
+            transition: background 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(10, 15, 13, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--color-text);
+        }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dim) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--color-bg);
+            font-weight: 400;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-primary);
+            transition: width 0.3s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--ease-out-expo) 0.2s forwards;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 0.3s forwards;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--color-primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-text-muted);
+            max-width: 640px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 0.5s forwards;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 0.7s forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.75rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.25s var(--ease-out-quart);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-bg);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-text);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(125, 211, 168, 0.25);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Waveform Animation */
+        .waveform-container {
+            position: absolute;
+            bottom: 4rem;
+            left: 2rem;
+            right: 2rem;
+            height: 80px;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 1s forwards;
+        }
+
+        .waveform-bar {
+            flex: 1;
+            max-width: 4px;
+            background: linear-gradient(to top, var(--color-primary-dim), var(--color-primary));
+            border-radius: 2px;
+            animation: wave 1.5s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.3); }
+            50% { transform: scaleY(1); }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Research Question */
+        .research-question {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-question::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-family: var(--font-display);
+            font-size: 12rem;
+            color: var(--color-border);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .research-question p {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .research-question em {
+            color: var(--color-primary);
+            font-style: normal;
+        }
+
+        /* Hypotheses Cards */
+        .hypotheses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .hypothesis-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s var(--ease-out-quart);
+        }
+
+        .hypothesis-card:hover {
+            border-color: var(--color-primary-dim);
+            transform: translateY(-4px);
+        }
+
+        .hypothesis-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--color-primary);
+            color: var(--color-bg);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .hypothesis-card h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .hypothesis-card p {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Pipeline Section */
+        .pipeline-visual {
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            overflow-x: auto;
+        }
+
+        .pipeline-stages {
+            display: flex;
+            gap: 0;
+            min-width: max-content;
+        }
+
+        .pipeline-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            position: relative;
+        }
+
+        .pipeline-stage:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 2px;
+            background: linear-gradient(to right, var(--color-primary-dim), var(--color-primary));
+        }
+
+        .pipeline-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .pipeline-stage span {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            text-align: center;
+            max-width: 100px;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27ca40; }
+
+        .code-content {
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .code-content .comment { color: var(--color-text-muted); }
+        .code-content .keyword { color: var(--color-accent); }
+        .code-content .function { color: var(--color-primary); }
+        .code-content .string { color: #a8cc8c; }
+        .code-content .number { color: #dbab79; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s var(--ease-out-quart);
+        }
+
+        .stat-card:hover {
+            border-color: var(--color-primary-dim);
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Hardware Section */
+        .hardware-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .hardware-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            transition: all 0.3s var(--ease-out-quart);
+        }
+
+        .hardware-card:hover {
+            border-color: var(--color-primary-dim);
+            transform: translateY(-2px);
+        }
+
+        .hardware-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .hardware-info h4 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .hardware-info p {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Team Section */
+        .team-section {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid var(--color-border);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--color-primary-dim), var(--color-primary));
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--color-bg);
+        }
+
+        .team-member h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-member .role {
+            color: var(--color-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-member .affiliation {
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            aspect-ratio: 16/10;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-quart);
+        }
+
+        .gallery-item:hover {
+            border-color: var(--color-primary);
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 15, 13, 0.9), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-caption {
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-bg-alt);
+            border-top: 1px solid var(--color-border);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links h5 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: block;
+            padding: 0.35rem 0;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .social-links a:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .waveform-container {
+                display: none;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .research-question {
+                padding: 2rem;
+            }
+
+            .research-question p {
+                font-size: 1.25rem;
+            }
+
+            .pipeline-stage {
+                padding: 1rem;
+            }
+
+            .footer-content {
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="noise-overlay"></div>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <div class="logo-mark">M</div>
+                <div class="logo-text">MUP<span>Lab</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#research">Research</a></li>
+                <li><a href="#methodology">Methodology</a></li>
+                <li><a href="#hardware">Hardware</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="https://github.com/anthemrukiyawingate/MUP" target="_blank">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>Active Research Project</span>
+                </div>
+                <h1>Listening to <em>Moringa</em><br>Through Ultrasound</h1>
+                <p class="hero-subtitle">
+                    Investigating ultrasonic emissions in <em>Moringa oleifera</em> to develop precision agriculture 
+                    tools for early stress detection and real-time plant health monitoring.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://github.com/anthemrukiyawingate/MUP" class="btn btn-primary" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        </svg>
+                        View Repository
+                    </a>
+                    <a href="#research" class="btn btn-secondary">
+                        Learn More
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="waveform-container" id="waveform"></div>
+        </section>
+
+        <section id="research">
+            <div class="section-label">Research Focus</div>
+            <h2 class="section-title">Can Plants Tell Us When They're Stressed?</h2>
+            
+            <div class="research-question reveal">
+                <p>Do <em>Moringa oleifera</em> stems emit detectable ultrasonic pops that correlate with 
+                water stress and time-of-day state?</p>
+            </div>
+
+            <div class="hypotheses-grid">
+                <div class="hypothesis-card reveal">
+                    <div class="hypothesis-label">H1</div>
+                    <h4>Stress-Induced Emissions</h4>
+                    <p>Click rate per hour increases under moderate drought stress relative to baseline conditions.</p>
+                </div>
+                <div class="hypothesis-card reveal">
+                    <div class="hypothesis-label">H2</div>
+                    <h4>Diurnal Patterns</h4>
+                    <p>Click rate exhibits bimodal daily peaks aligned with transpiration windows.</p>
+                </div>
+                <div class="hypothesis-card reveal">
+                    <div class="hypothesis-label">H3</div>
+                    <h4>Machine Classification</h4>
+                    <p>A supervised classifier achieves ≥70% balanced accuracy for stress detection on hold-out plants.</p>
+                </div>
+            </div>
+
+            <div class="stats-grid reveal">
+                <div class="stat-card">
+                    <div class="stat-value">384</div>
+                    <div class="stat-label">kHz Sampling Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">60+</div>
+                    <div class="stat-label">Plant Specimens</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Week Protocol</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">150</div>
+                    <div class="stat-label">GB Target Data</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="methodology">
+            <div class="section-label">Methodology</div>
+            <h2 class="section-title">From Capture to Classification</h2>
+            
+            <div class="pipeline-visual reveal">
+                <div class="pipeline-stages">
+                    <div class="pipeline-stage">
+                        <div class="pipeline-icon">🎙️</div>
+                        <span>Capture<br>384 kHz WAV</span>
+                    </div>
+                    <div class="pipeline-stage">
+                        <div class="pipeline-icon">〜</div>
+                        <span>RMS Detector<br>20-100 kHz</span>
+                    </div>
+                    <div class="pipeline-stage">
+                        <div class="pipeline-icon">📊</div>
+                        <span>STFT Features<br>+ Event Tiles</span>
+                    </div>
+                    <div class="pipeline-stage">
+                        <div class="pipeline-icon">🧠</div>
+                        <span>Models<br>RF + CNN</span>
+                    </div>
+                    <div class="pipeline-stage">
+                        <div class="pipeline-icon">⚖️</div>
+                        <span>Calibration<br>ECE + Brier</span>
+                    </div>
+                    <div class="pipeline-stage">
+                        <div class="pipeline-icon">🎯</div>
+                        <span>Thresholds<br>Cost-Aware</span>
+                    </div>
+                    <div class="pipeline-stage">
+                        <div class="pipeline-icon">📱</div>
+                        <span>On-Device<br>ONNX</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block reveal">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                </div>
+                <pre class="code-content"><span class="comment"># Core detection and feature extraction pipeline</span>
+<span class="keyword">for</span> f <span class="keyword">in</span> wavs:
+    x, sr = <span class="function">load_wav</span>(f)                <span class="comment"># 384 kHz expected</span>
+    x = <span class="function">bandlimit</span>(x, sr, <span class="number">20000</span>, <span class="number">100000</span>)
+    <span class="keyword">for</span> seg <span class="keyword">in</span> <span class="function">rms_detector</span>(x, sr, thresh_db=<span class="number">6</span>):
+        feats = <span class="function">spectral_features</span>(x, sr, seg)
+        feats[<span class="string">"label"</span>] = <span class="function">lookup_label</span>(f, seg)
+        events.<span class="function">append</span>(feats)
+
+<span class="comment"># Group-safe train/val/test split</span>
+train_df, val_df, test_df = <span class="function">grouped_split</span>(events, group=<span class="string">"file"</span>)
+
+<span class="comment"># Train baseline classifier</span>
+clf = <span class="function">RandomForestClassifier</span>().<span class="function">fit</span>(Xtr, ytr)</pre>
+            </div>
+        </section>
+
+        <section id="hardware">
+            <div class="section-label">Lab Infrastructure</div>
+            <h2 class="section-title">Purpose-Built Sensing Stations</h2>
+            <p style="color: var(--color-text-muted); max-width: 640px; margin-bottom: 2rem;">
+                Three identical hydroponic stations, each equipped with ultrasonic capture, edge computing, 
+                and visual monitoring for reproducible, multi-plant experiments.
+            </p>
+
+            <div class="hardware-grid">
+                <div class="hardware-card reveal">
+                    <div class="hardware-icon">🎤</div>
+                    <div class="hardware-info">
+                        <h4>Dodotronic Ultramic 384K EVO</h4>
+                        <p>USB ultrasonic microphone, 384 kHz sampling, optimized for bioacoustic capture</p>
+                    </div>
+                </div>
+                <div class="hardware-card reveal">
+                    <div class="hardware-icon">🖥️</div>
+                    <div class="hardware-info">
+                        <h4>Raspberry Pi 5 (16GB)</h4>
+                        <p>Quad-core A76, PCIe NVMe storage, on-device feature extraction and inference</p>
+                    </div>
+                </div>
+                <div class="hardware-card reveal">
+                    <div class="hardware-icon">💾</div>
+                    <div class="hardware-info">
+                        <h4>Samsung 990 PRO 1TB NVMe</h4>
+                        <p>High-endurance storage for continuous WAV capture, ~400 hours per station</p>
+                    </div>
+                </div>
+                <div class="hardware-card reveal">
+                    <div class="hardware-icon">🌱</div>
+                    <div class="hardware-info">
+                        <h4>VIVOSUN VGrow Smart Box</h4>
+                        <p>Hydroponic DWC system with app monitoring, water level and temperature sensors</p>
+                    </div>
+                </div>
+                <div class="hardware-card reveal">
+                    <div class="hardware-icon">📹</div>
+                    <div class="hardware-info">
+                        <h4>VIVOSUN GrowCam</h4>
+                        <p>2K 4MP camera, time-lapse capability, visual context for audio correlation</p>
+                    </div>
+                </div>
+                <div class="hardware-card reveal">
+                    <div class="hardware-icon">⚙️</div>
+                    <div class="hardware-info">
+                        <h4>Jenkins CI/CD Pipeline</h4>
+                        <p>Automated weekly runs, feature extraction, model training, and scorecard generation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="reveal">
+            <div class="section-label">Lab Setup</div>
+            <h2 class="section-title">Inside the Research Environment</h2>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://raw.githubusercontent.com/anthemrukiyawingate/MUP/main/lab-station-interior.jpg" 
+                         alt="Lab station interior showing hydroponic setup"
+                         onerror="this.parentElement.style.background='linear-gradient(135deg, var(--color-surface), var(--color-bg-alt))'">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Hydroponic station interior with DWC module</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://raw.githubusercontent.com/anthemrukiyawingate/MUP/main/lab-station-exterior.jpg" 
+                         alt="Lab station exterior view"
+                         onerror="this.parentElement.style.background='linear-gradient(135deg, var(--color-surface), var(--color-bg-alt))'">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Complete station with grow box and monitoring</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team">
+            <div class="team-section reveal">
+                <div class="section-label">Research Team</div>
+                <h2 class="section-title">The People Behind MUP</h2>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-avatar">AW</div>
+                        <h4>Anthem Rukiya J. Wingate</h4>
+                        <p class="role">Principal Investigator</p>
+                        <p class="affiliation">Computational Data Science & Engineering<br>North Carolina A&T State University</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">AI</div>
+                        <h4>Dr. A. K. M. Islam</h4>
+                        <p class="role">Faculty Advisor</p>
+                        <p class="affiliation">North Carolina A&T State University</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="section-label">Get Involved</div>
+            <h2 class="section-title">Open Science, Open Data</h2>
+            <p style="color: var(--color-text-muted); max-width: 640px; margin-bottom: 2rem;">
+                This research is committed to reproducibility and open science principles. 
+                All code, protocols, and datasets will be made available to the research community.
+            </p>
+            <div class="hero-actions">
+                <a href="https://github.com/anthemrukiyawingate/MUP" class="btn btn-primary" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                    Explore the Code
+                </a>
+                <a href="mailto:arwingate@aggies.ncat.edu" class="btn btn-secondary">
+                    Contact Us
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <div class="logo-mark">M</div>
+                    <div class="logo-text">MUP<span>Lab</span></div>
+                </a>
+                <p>Advancing precision agriculture through plant bioacoustics research at North Carolina A&T State University.</p>
+            </div>
+            <div class="footer-links">
+                <h5>Research</h5>
+                <ul>
+                    <li><a href="#research">Overview</a></li>
+                    <li><a href="#methodology">Methodology</a></li>
+                    <li><a href="#hardware">Hardware</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>Resources</h5>
+                <ul>
+                    <li><a href="https://github.com/anthemrukiyawingate/MUP" target="_blank">GitHub Repository</a></li>
+                    <li><a href="https://github.com/anthemrukiyawingate/MUP/blob/main/README.md" target="_blank">Documentation</a></li>
+                    <li><a href="#team">Team</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>Institution</h5>
+                <ul>
+                    <li><a href="https://www.ncat.edu" target="_blank">NC A&T State University</a></li>
+                    <li><a href="https://www.ncat.edu/coe/" target="_blank">College of Engineering</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Moringa Ultrasonic Pop Research. North Carolina A&T State University.</p>
+            <div class="social-links">
+                <a href="https://github.com/anthemrukiyawingate/MUP" target="_blank" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Generate waveform bars
+        const waveform = document.getElementById('waveform');
+        const barCount = Math.floor(window.innerWidth / 7);
+        for (let i = 0; i < barCount; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'waveform-bar';
+            bar.style.animationDelay = `${Math.random() * 1.5}s`;
+            bar.style.height = `${20 + Math.random() * 60}px`;
+            waveform.appendChild(bar);
+        }
+
+        // Header scroll effect
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
