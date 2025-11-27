@@ -1,4 +1,4 @@
-# FarmLab: Moringa Ultrasonic Pop Classification System
+# Moringa Ultrasonic Pop Classification Research Overview
 ---
 
 <img src="https://github.com/anthemrukiyawingate/MUP/blob/main/title-slide.png" alt="MUP1">
